@@ -14,5 +14,7 @@ fn main() {
     let msg = "No match found or something went wrong";
     let contents = fs::read_to_string(config.filename).expect(&msg);
 
+    // fs::write("test.js", config.query).expect(&msg);
+
     println!("With text:\n{}", contents);
 }
