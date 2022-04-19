@@ -11,7 +11,7 @@ pub fn test_metadata(file: &str) -> Result<String, String> {
         .read_from_container(&mut std::io::BufReader::new(&file))
         .unwrap();
 
-    result.push_str(&format!("{}", exif.little_endian()));
+    result.push_str(&format!("{}", &exif.little_endian()));
 
     // for f in exif.fields() {
     //     result.push_str(&format!("{} {} {}", f.tag, f.ifd_num, f.display_value()));
