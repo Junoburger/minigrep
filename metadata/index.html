@@ -5,16 +5,38 @@
 		<title>hello-wasm example</title>
 	</head>
 	<body>
+		<style>
+			body {
+				background: rgb(150, 148, 255);
+			}
+		</style>
 		<script type="module">
-			import init, { test_metadata } from "./pkg/metadata.js";
+			import init from "./pkg/metadata.js";
+			import * as meta from "./pkg/metadata.js";
+
 			init().then(async () => {
-				const response = await fetch("http://[::]:8000/test.jpg");
-				const data = await response.text();
+				const input = document.getElementById("image-input");
 
-				const x = await test_metadata(data);
+				const image_canvas = document.getElementById("canvas");
+				const ctx = image_canvas.getContext("2d");
+				const imageData = ctx.createImageData(100, 100);
 
-				console.log(x);
+				input.addEventListener("change", async (event) => {
+					const buffer = await event.target.files[0].arrayBuffer();
+					const view = new Uint8Array(buffer);
+
+					// const image = meta.Image.new(view);
+					// const imageBlob = image.get_image_blob();
+
+					document.getElementById("img-tag").src = URL.createObjectURL(
+						new Blob([view.buffer], { type: "image/png" })
+					);
+				});
 			});
 		</script>
+
+		<input type="file" id="image-input" multiple />
+		<canvas id="canvas" width="640" height="480"></canvas>
+		<img id="img-tag" />
 	</body>
 </html>
