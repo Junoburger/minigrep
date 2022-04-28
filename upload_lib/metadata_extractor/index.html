@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<script type="module">
-			import init, { get_file_data } from "./pkg/metadata.js";
+			import init, { get_image_blob } from "./pkg/metadata.js";
 
 			// UI COMPONENTS
 			const getMetaDatBtn = document.querySelector("#md_btn");
@@ -21,32 +21,18 @@
 					const buffer = await event.target.files[0].arrayBuffer();
 					const view = new Uint8Array(buffer);
 					x = view;
-					// console.log({ view });
-					const formData = new FormData();
-					formData.append("file", event.target.files[0]);
 
-					const req = await fetch("/upload", {
-						method: "POST",
-						body: formData,
-					});
+					// const formData = new FormData();
+					// formData.append("file", event.target.files[0]);
 
-					console.log(req);
-
-					// method: "POST",
-					// mode: "cors", // no-cors, *cors, same-origin
-					// cache: "no-cache",
-					// credentials: "same-origin",
-					// headers: {
-					// 	"Content-Type": "multipart/form-data",
-					// },
-					// redirect: "follow",
-					// referrerPolicy: "no-referrer",
-					// body: formData, // body data type must match "Content-Type" header
+					// const req = await fetch("/upload", {
+					// 	method: "POST",
+					// 	body: formData,
+					// });
 				});
 
 				getMetaDatBtn.addEventListener("click", async () => {
-					let y = await get_file_data(x.toString());
-					console.log(y);
+					await get_image_blob(x);
 				});
 			});
 		</script>

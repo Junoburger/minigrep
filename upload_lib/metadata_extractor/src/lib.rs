@@ -1,4 +1,5 @@
 use std::fs::File;
+use std::io::Cursor;
 use wasm_bindgen::prelude::*;
 
 // author::copyright
@@ -16,8 +17,29 @@ use wasm_bindgen::prelude::*;
 //
 pub fn handle_metadata() -> std::io::Result<()> {
     #[wasm_bindgen]
-    pub fn get_file_data(file: &str) {
-        log(&format!("Hello, {:?}!", file));
+    pub fn get_image_blob(vector: Vec<u8>) {
+        let mut file = Cursor::new(vector);
+
+        let exifreader = exif::Reader::new();
+        let exif = exifreader.read_from_container(&mut file).unwrap();
+
+        fn set_copy_right(copyright: &str) {
+            log(&format!("COPYRIGHT = , {:?}!", copyright));
+        }
+
+        match exif.get_field(exif::Tag::Copyright, exif::In::PRIMARY) {
+            Some(copyright) => set_copy_right(copyright.display_value().to_string().as_str()),
+            None => println!("No copyright tag found"),
+        }
+
+        for field in exif.fields() {
+            log(&format!(
+                "{:?} {:?} {}",
+                field.tag,
+                field.ifd_num,
+                field.display_value().with_unit(&exif),
+            ));
+        }
     }
 
     let file = File::open("./files/yellow.tif")?;
