@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<script type="module">
+			import init, { get_file_data } from "./pkg/metadata.js";
+
+			// UI COMPONENTS
+			const getMetaDatBtn = document.querySelector("#md_btn");
+			const input = document.getElementById("image-input");
+
+			init().then(async () => {
+				let x;
+
+				input.addEventListener("change", async (event) => {
+					const buffer = await event.target.files[0].arrayBuffer();
+					const view = new Uint8Array(buffer);
+					x = view;
+					// console.log({ view });
+					const formData = new FormData();
+					formData.append("file", event.target.files[0]);
+
+					const req = await fetch("/upload", {
+						method: "POST",
+						body: formData,
+					});
+
+					console.log(req);
+
+					// method: "POST",
+					// mode: "cors", // no-cors, *cors, same-origin
+					// cache: "no-cache",
+					// credentials: "same-origin",
+					// headers: {
+					// 	"Content-Type": "multipart/form-data",
+					// },
+					// redirect: "follow",
+					// referrerPolicy: "no-referrer",
+					// body: formData, // body data type must match "Content-Type" header
+				});
+
+				getMetaDatBtn.addEventListener("click", async () => {
+					let y = await get_file_data(x.toString());
+					console.log(y);
+				});
+			});
+		</script>
+
+		<button id="md_btn">Get some sweet metadata</button>
+		<input type="file" id="image-input" multiple />
+	</body>
+</html>

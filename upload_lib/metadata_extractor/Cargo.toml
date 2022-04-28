@@ -1,0 +1,16 @@
+[package]
+name = "metadata_extractor"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# rexiv2 = "0.9.1"
+kamadak-exif = "0.5.4"
+wasm-bindgen = "0.2.80"
+
+
+
+[lib]
+name= "metadata"
+path = "src/lib.rs"
+crate-type = ["cdylib", "rlib"]

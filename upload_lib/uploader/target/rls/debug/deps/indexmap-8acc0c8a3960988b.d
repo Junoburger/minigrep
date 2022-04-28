@@ -1,0 +1,13 @@
+/Users/home/Development/Projects/RUST/projects/upload_lib/uploader/target/rls/debug/deps/indexmap-8acc0c8a3960988b.rmeta: /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/lib.rs /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/macros.rs /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/equivalent.rs /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/mutable_keys.rs /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/util.rs /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/map.rs /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/map/core.rs /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/map/core/raw.rs /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/set.rs
+
+/Users/home/Development/Projects/RUST/projects/upload_lib/uploader/target/rls/debug/deps/indexmap-8acc0c8a3960988b.d: /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/lib.rs /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/macros.rs /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/equivalent.rs /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/mutable_keys.rs /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/util.rs /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/map.rs /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/map/core.rs /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/map/core/raw.rs /Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/set.rs
+
+/Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/lib.rs:
+/Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/macros.rs:
+/Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/equivalent.rs:
+/Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/mutable_keys.rs:
+/Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/util.rs:
+/Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/map.rs:
+/Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/map/core.rs:
+/Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/map/core/raw.rs:
+/Users/home/.cargo/registry/src/github.com-1ecc6299db9ec823/indexmap-1.8.1/src/set.rs:

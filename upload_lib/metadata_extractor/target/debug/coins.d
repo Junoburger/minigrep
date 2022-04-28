@@ -1,0 +1,1 @@
+/Users/home/Development/Projects/RUST/projects/metadata_extractor/target/debug/coins: /Users/home/Development/Projects/RUST/projects/metadata_extractor/src/lib.rs /Users/home/Development/Projects/RUST/projects/metadata_extractor/src/main.rs
