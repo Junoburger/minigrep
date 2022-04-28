@@ -1,52 +1,67 @@
-use std::fs::File;
+// use std::fs::File;
 use std::io::Cursor;
 use wasm_bindgen::prelude::*;
 
-// author::copyright
-// tags
-// title
-// createdISO8601: publiation_date
-// description
-// make (camera)
-// model (camera)
-// flash_found (camera)
-// resolution: dpi (if dots per inch is 0 set it to 72)
-// width
-// height
-// gps
-//
+struct MetaData {
+    // author::copyright
+    copyright: String,
+    // tags
+    // title
+    // createdISO8601: publiation_date
+    // description
+    description: String, // make (camera)
+                         // model (camera)
+                         // flash_found (camera)
+                         // resolution: dpi (if dots per inch is 0 set it to 72)
+                         // width
+                         // height
+                         // gps
+}
+
 pub fn handle_metadata() -> std::io::Result<()> {
     #[wasm_bindgen]
-    pub fn get_image_blob(vector: Vec<u8>) {
+    pub fn get_metadata_from_image_blob(vector: Vec<u8>) {
         let mut file = Cursor::new(vector);
 
         let exifreader = exif::Reader::new();
         let exif = exifreader.read_from_container(&mut file).unwrap();
-
-        fn set_copy_right(copyright: &str) {
-            log(&format!("COPYRIGHT = , {:?}!", copyright));
-        }
 
         match exif.get_field(exif::Tag::Copyright, exif::In::PRIMARY) {
             Some(copyright) => set_copy_right(copyright.display_value().to_string().as_str()),
             None => println!("No copyright tag found"),
         }
 
+        // let latitude = exif.get_field(exif::Tag::GPSLatitude, exif::In::PRIMARY);
+        // let longitude = exif.get_field(exif::Tag::GPSLongitude, exif::In::PRIMARY);
+
         for field in exif.fields() {
+            // if field.tag == exif::Tag::GPSLatitude || field.tag == exif::Tag::GPSLongitude {
             log(&format!(
                 "{:?} {:?} {}",
                 field.tag,
                 field.ifd_num,
                 field.display_value().with_unit(&exif),
             ));
+            // }
         }
+
+        // return latitude
+        //     .unwrap()
+        //     .display_value()
+        //     .with_unit(&exif)
+        //     .to_string();
     }
 
-    let file = File::open("./files/yellow.tif")?;
-    let mut bufreader = std::io::BufReader::new(&file);
+    fn set_copy_right(copyright: &str) {
+        log(&format!("COPYRIGHT = , {:?}!", copyright));
+        // return copyright;
+    }
 
-    let exifreader = exif::Reader::new();
-    let exif = exifreader.read_from_container(&mut bufreader).unwrap();
+    // let file = File::open("./files/yellow.tif")?;
+    // let mut bufreader = std::io::BufReader::new(&file);
+
+    // let exifreader = exif::Reader::new();
+    // let exif = exifreader.read_from_container(&mut bufreader).unwrap();
     // for field in exif.fields() {
     //     println!(
     //         "{} {} {}",
@@ -56,14 +71,10 @@ pub fn handle_metadata() -> std::io::Result<()> {
     //     );
     // }
 
-    fn set_copy_right(copyright: &str) {
-        println!("COPY {}", copyright);
-    }
-
-    match exif.get_field(exif::Tag::Copyright, exif::In::PRIMARY) {
-        Some(copyright) => set_copy_right(copyright.display_value().to_string().as_str()),
-        None => println!("No copyright tag found"),
-    }
+    // match exif.get_field(exif::Tag::Copyright, exif::In::PRIMARY) {
+    //     Some(copyright) => set_copy_right(copyright.display_value().to_string().as_str()),
+    //     None => println!("No copyright tag found"),
+    // }
 
     Ok(())
 }

@@ -8,31 +8,23 @@
 	</head>
 	<body>
 		<script type="module">
-			import init, { get_image_blob } from "./pkg/metadata.js";
+			import init, { get_metadata_from_image_blob } from "./pkg/metadata.js";
 
 			// UI COMPONENTS
-			const getMetaDatBtn = document.querySelector("#md_btn");
+			const getMetaDataBtn = document.querySelector("#md_btn");
 			const input = document.getElementById("image-input");
 
 			init().then(async () => {
-				let x;
+				let imageBlob;
 
 				input.addEventListener("change", async (event) => {
 					const buffer = await event.target.files[0].arrayBuffer();
 					const view = new Uint8Array(buffer);
-					x = view;
-
-					// const formData = new FormData();
-					// formData.append("file", event.target.files[0]);
-
-					// const req = await fetch("/upload", {
-					// 	method: "POST",
-					// 	body: formData,
-					// });
+					imageBlob = view;
 				});
 
-				getMetaDatBtn.addEventListener("click", async () => {
-					await get_image_blob(x);
+				getMetaDataBtn.addEventListener("click", async () => {
+					await get_metadata_from_image_blob(imageBlob);
 				});
 			});
 		</script>
