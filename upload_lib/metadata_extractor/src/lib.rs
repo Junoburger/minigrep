@@ -9,18 +9,21 @@ struct MetaData {
     // title
     // createdISO8601: publiation_date
     // description
-    description: String, // make (camera)
-                         // model (camera)
-                         // flash_found (camera)
-                         // resolution: dpi (if dots per inch is 0 set it to 72)
-                         // width
-                         // height
-                         // gps
+    description: String,
+    // make (camera)
+    make: String,
+    // model (camera)
+    model: String,
+    // flash_found (camera)
+    // resolution: dpi (if dots per inch is 0 set it to 72)
+    // width
+    // height
+    // gps
 }
 
 pub fn handle_metadata() -> std::io::Result<()> {
     #[wasm_bindgen]
-    pub fn get_metadata_from_image_blob(vector: Vec<u8>) {
+    pub fn get_metadata_from_image_blob(vector: Vec<u8>) -> std::string::String {
         let mut file = Cursor::new(vector);
 
         let exifreader = exif::Reader::new();
@@ -33,6 +36,7 @@ pub fn handle_metadata() -> std::io::Result<()> {
 
         // let latitude = exif.get_field(exif::Tag::GPSLatitude, exif::In::PRIMARY);
         // let longitude = exif.get_field(exif::Tag::GPSLongitude, exif::In::PRIMARY);
+        let mut results_vector: Vec<String> = Vec::new();
 
         for field in exif.fields() {
             // if field.tag == exif::Tag::GPSLatitude || field.tag == exif::Tag::GPSLongitude {
@@ -42,8 +46,13 @@ pub fn handle_metadata() -> std::io::Result<()> {
                 field.ifd_num,
                 field.display_value().with_unit(&exif),
             ));
+
+            results_vector.push(field.display_value().with_unit(&exif).to_string());
             // }
         }
+        let result_to_json = serde_json::to_string(&results_vector).unwrap();
+
+        return result_to_json;
 
         // return latitude
         //     .unwrap()

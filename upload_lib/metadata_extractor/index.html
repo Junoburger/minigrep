@@ -21,15 +21,19 @@
 					const buffer = await event.target.files[0].arrayBuffer();
 					const view = new Uint8Array(buffer);
 					imageBlob = view;
-				});
+					let result = await get_metadata_from_image_blob(imageBlob);
 
-				getMetaDataBtn.addEventListener("click", async () => {
-					await get_metadata_from_image_blob(imageBlob);
+					document.getElementById("metadata").append(JSON.parse(result));
 				});
 			});
 		</script>
-
-		<button id="md_btn">Get some sweet metadata</button>
-		<input type="file" id="image-input" multiple />
+		<input
+			type="button"
+			id="load_metadata"
+			value="Get some sweet metadata"
+			onclick="document.getElementById('image-input').click();"
+		/>
+		<input type="file" id="image-input" multiple style="display: none" />
+		<div id="metadata"></div>
 	</body>
 </html>
