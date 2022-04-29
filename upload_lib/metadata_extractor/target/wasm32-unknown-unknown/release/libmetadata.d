@@ -1,1 +1,0 @@
-/Users/home/Development/Projects/RUST/projects/upload_lib/metadata_extractor/target/wasm32-unknown-unknown/release/libmetadata.rlib: /Users/home/Development/Projects/RUST/projects/upload_lib/metadata_extractor/src/lib.rs
