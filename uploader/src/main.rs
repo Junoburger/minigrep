@@ -23,7 +23,7 @@ fn main() {
     impl Uploader {
         fn new() -> Uploader {
             Uploader {
-                id: None, // Should be a cryptography hash
+                id: None, // Should be a cryptographic hash
                 files: Vec::new(),
                 state: UploaderState::Intake,
             }

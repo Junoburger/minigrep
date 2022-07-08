@@ -1,0 +1,10 @@
+[package]
+name = "uploader_gui"
+version = "0.1.0"
+edition = "2021"
+
+
+[dependencies]
+egui = "0.17.0"
+eframe = "0.17.0"
+rfd = "0.8.2"

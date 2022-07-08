@@ -6,9 +6,13 @@ fn main() {
     //     println!("{}", a[index]);
     //     index += 1;
     // }
+    fn test<'test>(x: &'test String) {
+        println!("{}", x);
+    }
 
     for element in 10..101 {
         println!("{}", element);
+        test(&"test".to_owned());
     }
 
     // let mut count = 0;
