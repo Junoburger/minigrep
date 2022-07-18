@@ -1,60 +1,96 @@
-pub mod config;
+use std::env;
+use std::error::Error;
+use std::fs;
 
-// use std::error::Error;
-// use std::fs;
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-// pub struct Config {
-//     pub query: String,
-//     pub filename: String,
-// }
+    #[test]
+    fn case_sensitive() {
+        let query = "duct";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick three.
+Duct tape.
+";
 
-// impl Config {
-//     pub fn new(args: &[String]) -> Result<Config, &'static str> {
-//         if args.len() < 3 {
-//             return Err("not enough arguments");
-//         }
+        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
+    }
+    #[test]
+    fn case_insensitive() {
+        let query = "rUsT";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick three.
+Trust me.";
 
-//         let query = args[1].clone();
-//         let filename = args[2].clone();
+        assert_eq!(
+            vec!["Rust:", "Trust me."],
+            search_case_insensitive(query, contents)
+        );
+    }
+}
 
-//         Ok(Config { query, filename })
-//     }
-// }
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    contents
+        .lines()
+        .filter(|line| line.contains(query))
+        .collect()
+}
 
-// pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-//     let contents = fs::read_to_string(config.filename)?;
+pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    contents
+        .lines()
+        .filter(|line| line.to_lowercase().contains(&query.to_lowercase()))
+        .collect()
+}
 
-//     for line in search(&config.query, &contents) {
-//         println!("{}", line);
-//     }
+pub struct Config {
+    pub query: String,
+    pub filename: String,
+    pub ignore_case: bool,
+}
 
-//     Ok(())
-// }
+impl Config {
+    pub fn new(mut args: impl Iterator<Item = String>) -> Result<Config, &'static str> {
+        // call next to ignore name of the program
+        args.next();
 
-// pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-//     let mut results = Vec::new();
+        let query = match args.next() {
+            Some(arg) => arg,
+            None => return Err("Didn't get a query string"),
+        };
 
-//     for line in contents.lines() {
-//         if line.contains(query) {
-//             results.push(line);
-//         }
-//     }
+        let filename = match args.next() {
+            Some(arg) => arg,
+            None => return Err("Didn't get a file name"),
+        };
 
-//     results
-// }
+        let ignore_case = env::var("IGNORE_CASE").is_ok();
 
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
+        Ok(Config {
+            query,
+            filename,
+            ignore_case,
+        })
+    }
+}
 
-//     #[test]
-//     fn one_result() {
-//         let query = "duct";
-//         let contents = "\
-// Rust:
-// safe, fast, productive.
-// Pick three.";
+pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(config.filename)?;
 
-//         assert_eq!(vec!["safe, fast, productive."], search(query, contents));
-//     }
-// }
+    let results = if config.ignore_case {
+        search_case_insensitive(&config.query, &contents)
+    } else {
+        search(&config.query, &contents)
+    };
+
+    for line in results {
+        println!("{}", line);
+    }
+
+    Ok(())
+}
